@@ -5,6 +5,8 @@ import aiogram
 from aiocache import Cache
 from aiocache.serializers import PickleSerializer
 from aiogram import Bot
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 from pyrogram import Client, enums, filters
 from pyrogram.enums import ChatType
 from pyrogram.types import Message
@@ -121,7 +123,7 @@ async def send_cached_message(
     text: str = "",
     media_group: Optional[List[aiogram.types.InputMedia]] = None,
 ):
-    bot = Bot(db.get("history", "bot_token"), parse_mode="HTML")
+    bot = Bot(db.get("history", "bot_token"), default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     if media_group:
         await bot.send_media_group(client.me.id, media_group)
